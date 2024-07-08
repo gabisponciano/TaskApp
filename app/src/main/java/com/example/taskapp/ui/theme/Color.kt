@@ -3,6 +3,7 @@ package com.example.taskapp.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val buttonBlue = Color(0XFF006FFD)
+val backButton = Color(0XFFEAF2FF)
 val texthin = Color(0xFF71727A)
 val progressBarColor = Color(0XFFF8F9FE)
 val textfield = Color(0XFF1F2024)

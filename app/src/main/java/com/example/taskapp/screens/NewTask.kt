@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -88,7 +92,7 @@ fun newTaskScreen(){
                     OutlinedTextField(value = taskViewModel.tittle.value,
                         onValueChange = {taskViewModel.tittleTask(it)},
                         singleLine = true,
-                        label = { Text(text = ("Título"), color = textfield) },
+                        label = { Text(text = ("Título"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
                             .width(343.dp)
                             .height(52.dp),
@@ -102,7 +106,7 @@ fun newTaskScreen(){
 
                     OutlinedTextField(value = taskViewModel.description.value,
                         onValueChange = {taskViewModel.descriptionTask(it)},
-                        label = { Text(text = ("Descrição"), color = textfield) },
+                        label = { Text(text = ("Descrição"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
                             .width(343.dp)
                             .height(52.dp),
@@ -112,6 +116,25 @@ fun newTaskScreen(){
                         )
                     )
 
+                    Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
+
+                    Box {
+                        Column (){
+                            Text(text = "Status",fontSize = 14.sp)
+                            Row {
+                                Button(onClick = { /*TODO*/ },
+                                    modifier = Modifier
+                                        .width(81.dp)
+                                        .height(24.dp)
+                                ) {
+                                    Text(text = "PEDENTE", color = buttonBlue, fontSize = 10.sp)
+                                    
+                                }
+
+                            }
+                        }
+
+                    }
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
 
