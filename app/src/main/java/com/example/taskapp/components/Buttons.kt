@@ -55,7 +55,7 @@ fun progressButton(){
     Box (
         modifier = Modifier
             .width(343.dp)
-            .height(31.dp)
+            .height(39.dp)
             .clip(RoundedCornerShape(5.dp))
             .background(progressBarColor),
         contentAlignment = Alignment.Center

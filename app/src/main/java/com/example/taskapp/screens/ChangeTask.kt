@@ -6,23 +6,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -34,25 +26,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.taskapp.components.progressButton
 import com.example.taskapp.components.taskButton
 import com.example.taskapp.ui.theme.backButton
 import com.example.taskapp.ui.theme.buttonBlue
 import com.example.taskapp.ui.theme.dividerColor
 import com.example.taskapp.ui.theme.textfield
-import com.example.taskapp.ui.theme.texthin
+import com.example.taskapp.viewmodel.ChangeViewModel
 import com.example.taskapp.viewmodel.TaskViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun newTaskScreen(){
+fun changeTaskScreen(){
 
-    val taskViewModel = viewModel<TaskViewModel>()
+    val changeViewModel = viewModel<ChangeViewModel>()
 
     Scaffold(
         topBar = {
@@ -61,13 +51,7 @@ fun newTaskScreen(){
                     containerColor = Color.White
                 ),
 
-                navigationIcon ={ Text(text = "Cancelar",
-                    fontSize = 12.sp,
-                    color = buttonBlue,
-                    modifier = Modifier.clickable {  }
 
-                    )}
-                ,
                 title = {
                     Text("Nova Task",
                         fontWeight = FontWeight.Bold,
@@ -98,8 +82,8 @@ fun newTaskScreen(){
                 .fillMaxWidth(),
                 contentAlignment = Alignment.Center){
                 Column (horizontalAlignment = Alignment.CenterHorizontally){
-                    OutlinedTextField(value = taskViewModel.tittle.value,
-                        onValueChange = {taskViewModel.tittleTask(it)},
+                    OutlinedTextField(value = changeViewModel.tittle.value,
+                        onValueChange = {changeViewModel.tittleTask(it)},
                         singleLine = true,
                         label = { Text(text = ("Título"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
@@ -113,8 +97,8 @@ fun newTaskScreen(){
 
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
-                    OutlinedTextField(value = taskViewModel.description.value,
-                        onValueChange = {taskViewModel.descriptionTask(it)},
+                    OutlinedTextField(value = changeViewModel.description.value,
+                        onValueChange = {changeViewModel.descriptionTask(it)},
                         label = { Text(text = ("Descrição"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
                             .width(343.dp)
@@ -131,7 +115,7 @@ fun newTaskScreen(){
                         .height(100.dp)
                         .width(343.dp),
                         contentAlignment = Alignment.Center
-                        ){
+                    ){
                         Column (verticalArrangement = Arrangement.spacedBy(18.dp)){
                             Text(text = "Status",fontSize = 14.sp, color = textfield)
                             Row (horizontalArrangement = Arrangement.spacedBy(8.dp)){
@@ -142,8 +126,8 @@ fun newTaskScreen(){
                                     .background(backButton)
                                     .clickable {},
                                     contentAlignment = Alignment.Center
-                                    )
-                                    {
+                                )
+                                {
                                     Text(text = "PENDENTE", fontSize = 10.sp, color = buttonBlue)
                                 }
                                 Box(modifier = Modifier
@@ -195,6 +179,6 @@ fun newTaskScreen(){
 
 @Preview
 @Composable
-fun newTaskScreenPreview(){
-    newTaskScreen()
+fun changeScreenPreview(){
+    changeTaskScreen()
 }
