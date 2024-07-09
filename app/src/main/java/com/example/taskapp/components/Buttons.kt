@@ -34,22 +34,20 @@ import com.example.taskapp.ui.theme.texthin
 @Composable
 fun screen(){
     Column (modifier = Modifier.fillMaxSize()){
-        taskButton(tittle = "Crie uma task")
+        taskButton(tittle = "Crie uma task", rememberNavController())
         progressButton()
 
     }
 }
 
 @Composable
-fun taskButton(tittle:String){
+fun taskButton(tittle:String, navController: NavController){
     Box(modifier = Modifier
         .height(48.dp)
         .width(327.dp)
         .clip(RoundedCornerShape(5.dp))
         .background(buttonBlue)
-        .clickable {
-
-        },
+        .clickable { navController.navigate("task") },
         contentAlignment = Alignment.Center
     ){
         Text(text = tittle, fontSize = 12.sp, color = Color.White)
@@ -58,54 +56,55 @@ fun taskButton(tittle:String){
 
 
 @Composable
-fun progressButton(){
+fun progressButton() {
 
-    Box (
+    Box(
         modifier = Modifier
             .clip(RoundedCornerShape(5.dp))
             .background(progressBarColor),
         contentAlignment = Alignment.Center
-    ){
-        Row (verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)){
-            Box(modifier = Modifier
-                .height(31.dp)
-                .width(105.dp)
-                .clip(RoundedCornerShape(5.dp))
-                .background(progressBarColor)
-                .clickable {  },
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .height(31.dp)
+                    .width(107.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .background(progressBarColor)
+                    .clickable { },
                 contentAlignment = Alignment.Center
-                ){
+            ) {
                 Text(text = "Pendentes", color = texthin)
             }
             Text(text = "|", color = texthin)
-            Box(modifier = Modifier
-                .height(31.dp)
-                .width(105.dp)
-                .clip(RoundedCornerShape(5.dp))
-                .background(progressBarColor),
+            Box(
+                modifier = Modifier
+                    .height(31.dp)
+                    .width(105.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .background(progressBarColor),
                 contentAlignment = Alignment.Center
-                ){
+            ) {
                 Text(text = "Em Progresso", color = texthin)
             }
             Text(text = "|", color = texthin)
-            Box(modifier = Modifier
-                .height(31.dp)
-                .width(105.dp)
-                .clip(RoundedCornerShape(5.dp))
-                .background(progressBarColor),
+            Box(
+                modifier = Modifier
+                    .height(31.dp)
+                    .width(105.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .background(progressBarColor),
                 contentAlignment = Alignment.Center
-                ){
+            ) {
                 Text(text = "Terminados", color = texthin)
             }
-//            Text(text = "Pendentes", color = texthin)
-//            Text(text = "|", color = texthin)
-//            Text(text = "Em Progresso", color = texthin)
-//            Text(text = "|", color = texthin)
-//            Text(text = "Terminados", color = texthin)
+
         }
 
     }
-
 }
 
 

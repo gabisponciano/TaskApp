@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TaskAppTheme {
-
+                Navigation()
             }
         }
     }
@@ -35,12 +35,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Navigation(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "list"){
+    NavHost(navController = navController, startDestination = "home"){
         composable("home"){
             homeScreen(navController)
         }
         composable("task"){
-            newTaskScreen()
+            newTaskScreen(navController)
         }
 
         composable("list"){

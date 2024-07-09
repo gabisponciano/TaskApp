@@ -1,5 +1,6 @@
 package com.example.taskapp.screens
 
+import android.content.pm.ActivityInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.example.taskapp.components.LockScreenOrientation
 import com.example.taskapp.components.taskButton
 import com.example.taskapp.ui.theme.backButton
 import com.example.taskapp.ui.theme.buttonBlue
@@ -44,6 +46,8 @@ import com.example.taskapp.viewmodel.TaskViewModel
 fun changeTaskScreen(){
 
     val changeViewModel = viewModel<ChangeViewModel>()
+
+    LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
     Scaffold(
         topBar = {
@@ -178,7 +182,7 @@ fun changeTaskScreen(){
 
             }
             Box {
-                taskButton(tittle = "Criar")
+                taskButton(tittle = "Criar", rememberNavController())
             }
         }
     }

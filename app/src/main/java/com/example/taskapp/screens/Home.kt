@@ -1,6 +1,8 @@
 package com.example.taskapp.screens
 
+import android.content.pm.ActivityInfo
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.taskapp.components.LockScreenOrientation
 import com.example.taskapp.components.progressButton
 import com.example.taskapp.components.taskButton
 import com.example.taskapp.ui.theme.buttonBlue
@@ -47,6 +50,7 @@ import com.example.taskapp.ui.theme.texthin
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun homeScreen(navController: NavController){
+    LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -98,7 +102,7 @@ fun homeScreen(navController: NavController){
                 }
             }
             Box {
-                taskButton(tittle = "Crie uma Tesk")
+                taskButton(tittle = "Crie uma Tesk", rememberNavController())
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.taskapp.screens
 
+import android.content.pm.ActivityInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +13,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
@@ -36,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import com.example.taskapp.components.LockScreenOrientation
 import com.example.taskapp.components.changeButton
 import com.example.taskapp.components.progressButton
 import com.example.taskapp.components.saveButton
@@ -48,6 +52,9 @@ import com.example.taskapp.ui.theme.texthin
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun taskList(){
+
+    LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -73,7 +80,8 @@ fun taskList(){
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(Color.White),
+                .background(Color.White)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
@@ -142,6 +150,7 @@ fun taskList(){
                     Spacer(modifier = Modifier.width(10.dp))
                     saveButton()
 
+
                 }
 
             }
@@ -188,7 +197,7 @@ fun taskList(){
             }
             Spacer(modifier = Modifier.height(80.dp))
             Box {
-                taskButton(tittle = "Crie uma Tesk")
+                taskButton(tittle = "Crie uma Tesk", rememberNavController())
             }
         }
     }

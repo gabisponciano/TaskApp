@@ -1,5 +1,6 @@
 package com.example.taskapp.screens
 
+import android.content.pm.ActivityInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +40,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.taskapp.components.LockScreenOrientation
 import com.example.taskapp.components.progressButton
 import com.example.taskapp.components.taskButton
 import com.example.taskapp.ui.theme.backButton
@@ -50,9 +54,10 @@ import com.example.taskapp.viewmodel.TaskViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun newTaskScreen(){
+fun newTaskScreen(navController: NavController){
 
     val taskViewModel = viewModel<TaskViewModel>()
+    LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
     Scaffold(
         topBar = {
@@ -187,7 +192,7 @@ fun newTaskScreen(){
 
             }
             Box {
-                taskButton(tittle = "Criar")
+                taskButton(tittle = "Criar", rememberNavController())
             }
         }
     }
@@ -196,5 +201,5 @@ fun newTaskScreen(){
 @Preview
 @Composable
 fun newTaskScreenPreview(){
-    newTaskScreen()
+    newTaskScreen(navController = rememberNavController())
 }
