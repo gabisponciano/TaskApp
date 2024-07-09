@@ -26,7 +26,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             TaskAppTheme {
 
-
             }
         }
     }
@@ -38,7 +37,7 @@ fun Navigation(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "list"){
         composable("home"){
-            homeScreen()
+            homeScreen(navController)
         }
         composable("task"){
             newTaskScreen()

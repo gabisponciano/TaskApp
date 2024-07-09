@@ -8,6 +8,7 @@ val texthin = Color(0xFF71727A)
 val progressBarColor = Color(0XFFF8F9FE)
 val textfield = Color(0XFF1F2024)
 val dividerColor = Color(0xFFE1E2E7)
+val redbutton = Color(0XFFFD0000)
 
 
 val Purple80 = Color(0xFFD0BCFF)

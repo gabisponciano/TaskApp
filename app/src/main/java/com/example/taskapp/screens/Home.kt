@@ -37,6 +37,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.taskapp.components.progressButton
 import com.example.taskapp.components.taskButton
 import com.example.taskapp.ui.theme.buttonBlue
@@ -44,7 +46,7 @@ import com.example.taskapp.ui.theme.texthin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun homeScreen(){
+fun homeScreen(navController: NavController){
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -105,5 +107,5 @@ fun homeScreen(){
 @Preview
 @Composable
 fun HomePreview(){
-    homeScreen()
+    homeScreen(navController = rememberNavController())
 }
