@@ -50,7 +50,13 @@ fun changeTaskScreen(){
                 colors = topAppBarColors(
                     containerColor = Color.White
                 ),
+                navigationIcon ={ Text(text = "Cancelar",
+                    fontSize = 12.sp,
+                    color = buttonBlue,
+                    modifier = Modifier.clickable {  }
 
+                )}
+                ,
 
                 title = {
                     Text("Nova Task",

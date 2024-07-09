@@ -98,6 +98,14 @@ fun taskList(){
                     }
                 }
 
+                Column (modifier = Modifier.padding(10.dp)){
+                    Row (){
+                        Text(text = "Descrição", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                        Text(text = "Lorem Ipsum", fontSize = 14.sp)
+                    }
+                }
+
+
 
             }
 

@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.taskapp.screens.homeScreen
 import com.example.taskapp.screens.newTaskScreen
+import com.example.taskapp.screens.taskList
 import com.example.taskapp.ui.theme.TaskAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,12 +36,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Navigation(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home"){
+    NavHost(navController = navController, startDestination = "list"){
         composable("home"){
             homeScreen()
         }
         composable("task"){
             newTaskScreen()
+        }
+
+        composable("list"){
+            taskList()
         }
     }
 }
