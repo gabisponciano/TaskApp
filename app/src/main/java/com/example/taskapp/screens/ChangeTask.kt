@@ -32,6 +32,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.taskapp.components.LockScreenOrientation
 import com.example.taskapp.components.taskButton
@@ -46,7 +47,7 @@ import com.example.taskapp.viewmodel.TaskViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun changeTaskScreen(){
+fun changeTaskScreen(navController: NavController){
 
     val changeViewModel = viewModel<ChangeViewModel>()
     val buttonViewModel = viewModel<ButtonViewModel>()
@@ -90,7 +91,10 @@ fun changeTaskScreen(){
             BottomAppBar (
                 containerColor = Color.White
             ){
-                taskButton(tittle = "Criar", rememberNavController(), "task")
+                taskButton(tittle = "Atualizar") {
+                    navController.navigate("")
+                    
+                }
             }
         },
     ) { innerPadding ->
@@ -106,7 +110,9 @@ fun changeTaskScreen(){
                 .height(320.dp)
                 .fillMaxWidth(),
                 contentAlignment = Alignment.Center){
-                Column (horizontalAlignment = Alignment.CenterHorizontally){
+                Column (horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(8.dp)
+                    ){
                     OutlinedTextField(value = changeViewModel.tittle.value,
                         onValueChange = {changeViewModel.tittleTask(it)},
                         singleLine = true,
@@ -162,7 +168,7 @@ fun changeTaskScreen(){
                                     .width(109.dp)
                                     .clip(RoundedCornerShape(10.dp))
                                     .background(if (buttonViewModel.button.value == 2) buttonBlue else backButton)
-                                    .clickable {buttonViewModel.button.value = 2},
+                                    .clickable { buttonViewModel.button.value = 2 },
                                     contentAlignment = Alignment.Center
                                 )
                                 {
@@ -174,7 +180,7 @@ fun changeTaskScreen(){
                                     .width(89.dp)
                                     .clip(RoundedCornerShape(10.dp))
                                     .background(if (buttonViewModel.button.value == 3) buttonBlue else backButton)
-                                    .clickable {buttonViewModel.button.value = 3},
+                                    .clickable { buttonViewModel.button.value = 3 },
                                     contentAlignment = Alignment.Center
                                 )
                                 {
@@ -202,5 +208,6 @@ fun changeTaskScreen(){
 @Preview
 @Composable
 fun changeScreenPreview(){
-    changeTaskScreen()
+    val navController = rememberNavController()
+    changeTaskScreen(navController)
 }

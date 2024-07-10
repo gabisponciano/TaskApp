@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -26,38 +27,27 @@ class MainActivity : ComponentActivity() {
         setContent {
             TaskAppTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "task"){
-                    composable("home"){
+                Navigation(navController)
 
-                        homeScreen(navController)
-                    }
-                    composable("task"){
-                        newTaskScreen(navController)
-                    }
-
-                    composable("list"){
-                        taskList()
-                    }
-                }
             }
         }
     }
 }
 
 
-//@Composable
-//fun Navigation(){
+@Composable
+fun Navigation(navController:NavHostController){
 //    val navController = rememberNavController()
-//    NavHost(navController = navController, startDestination = "home"){
-//        composable("home"){
-//            homeScreen(navController)
-//        }
-//        composable("task"){
-//            newTaskScreen(navController)
-//        }
-//
-//        composable("list"){
-//            taskList()
-//        }
-//    }
-//}
+    NavHost(navController = navController, startDestination = "home"){
+        composable("home"){
+            homeScreen(navController)
+        }
+        composable("task"){
+            newTaskScreen(navController)
+        }
+
+        composable("list"){
+            taskList(navController)
+        }
+    }
+}

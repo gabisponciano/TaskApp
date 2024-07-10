@@ -95,7 +95,10 @@ fun newTaskScreen(navController: NavController){
             BottomAppBar (
                 containerColor = Color.White
             ){
-                taskButton(tittle = "Criar", rememberNavController(), "task")
+                taskButton(tittle = "Criar") {
+                    navController.navigate("")
+
+                }
             }
         },
     ) { innerPadding ->

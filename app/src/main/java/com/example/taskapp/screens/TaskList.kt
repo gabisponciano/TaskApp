@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.taskapp.components.LockScreenOrientation
 import com.example.taskapp.components.changeButton
@@ -52,7 +53,7 @@ import com.example.taskapp.ui.theme.texthin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun taskList(){
+fun taskList(navController: NavController){
 
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
@@ -80,7 +81,10 @@ fun taskList(){
             BottomAppBar (
                 containerColor = Color.White
             ){
-                taskButton(tittle = "Crie uma Tesk", rememberNavController(), "task")
+                taskButton(tittle = "Crie uma Task") {
+                    navController.navigate("")
+
+                }
             }
         },
 
@@ -212,5 +216,6 @@ fun taskList(){
 @Preview
 @Composable
 fun listPreview(){
-    taskList()
+    val navController = rememberNavController()
+    taskList(navController)
 }

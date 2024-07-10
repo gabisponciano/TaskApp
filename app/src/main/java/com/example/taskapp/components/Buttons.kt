@@ -38,14 +38,14 @@ import com.example.taskapp.viewmodel.ChangeViewModel
 @Composable
 fun screen(){
     Column (modifier = Modifier.fillMaxSize()){
-        taskButton(tittle = "Crie uma task", rememberNavController(), "task")
+//        taskButton(tittle = "Crie uma task", rememberNavController(), "task")
         progressButton()
 
     }
 }
 
 @Composable
-fun taskButton(tittle:String, navController: NavController, route:String){
+fun taskButton(tittle:String, onClick: () -> Unit){
     Column (modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -56,7 +56,7 @@ fun taskButton(tittle:String, navController: NavController, route:String){
             .width(327.dp)
             .clip(RoundedCornerShape(5.dp))
             .background(buttonBlue)
-            .clickable { navController.navigate(route) },
+            .clickable { onClick() },
             contentAlignment = Alignment.Center
         ){
             Text(text = tittle, fontSize = 12.sp, color = Color.White)

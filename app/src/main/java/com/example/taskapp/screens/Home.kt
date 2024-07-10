@@ -77,10 +77,8 @@ fun homeScreen(navController: NavHostController){
             )
         },
         bottomBar = {
-            BottomAppBar (
-                containerColor = Color.White
-            ){
-                taskButton(tittle = "Crie uma Tesk", rememberNavController(), "task")
+            taskButton(tittle = "Criar uma Task") {
+                navController.navigate("task")
             }
         },
     ) { innerPadding ->

@@ -52,6 +52,7 @@ android {
 
 dependencies {
 
+    //Room
     implementation("androidx.room:room-runtime:2.6.0")
     implementation("androidx.core:core-ktx:1.12.0")
     ksp("androidx.room:room-compiler:2.6.0")
@@ -60,9 +61,9 @@ dependencies {
     // Koin
     implementation(libs.koin.android)
     implementation(libs.insert.koin.koin.android)
-    //implementation(libs.insert.koin.koin.android)
-    implementation(libs.koin.android.v340)
-    implementation(libs.koin.androidx.compose)
+    implementation("io.insert-koin:koin-android:3.4.0")
+    implementation("io.insert-koin:koin-androidx-compose:3.4.0")
+
 
 
     implementation (libs.androidx.lifecycle.viewmodel.compose)
