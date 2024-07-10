@@ -192,7 +192,7 @@ fun newTaskScreen(navController: NavController){
 
             }
             Box {
-                taskButton(tittle = "Criar", rememberNavController())
+                taskButton(tittle = "Criar", rememberNavController(),"")
             }
         }
     }

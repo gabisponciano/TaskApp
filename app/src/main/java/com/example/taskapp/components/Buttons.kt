@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.taskapp.ui.theme.backButton
@@ -30,24 +31,26 @@ import com.example.taskapp.ui.theme.buttonBlue
 import com.example.taskapp.ui.theme.progressBarColor
 import com.example.taskapp.ui.theme.redbutton
 import com.example.taskapp.ui.theme.texthin
+import com.example.taskapp.viewmodel.ButtonViewModel
+import com.example.taskapp.viewmodel.ChangeViewModel
 
 @Composable
 fun screen(){
     Column (modifier = Modifier.fillMaxSize()){
-        taskButton(tittle = "Crie uma task", rememberNavController())
+        taskButton(tittle = "Crie uma task", rememberNavController(), "task")
         progressButton()
 
     }
 }
 
 @Composable
-fun taskButton(tittle:String, navController: NavController){
+fun taskButton(tittle:String, navController: NavController, route:String){
     Box(modifier = Modifier
         .height(48.dp)
         .width(327.dp)
         .clip(RoundedCornerShape(5.dp))
         .background(buttonBlue)
-        .clickable { navController.navigate("task") },
+        .clickable { navController.navigate(route) },
         contentAlignment = Alignment.Center
     ){
         Text(text = tittle, fontSize = 12.sp, color = Color.White)
@@ -57,6 +60,9 @@ fun taskButton(tittle:String, navController: NavController){
 
 @Composable
 fun progressButton() {
+    //val selected = remember { mutableStateOf(0) }
+
+    val buttonViewModel = viewModel<ButtonViewModel>()
 
     Box(
         modifier = Modifier
@@ -73,8 +79,8 @@ fun progressButton() {
                     .height(31.dp)
                     .width(107.dp)
                     .clip(RoundedCornerShape(5.dp))
-                    .background(progressBarColor)
-                    .clickable { },
+                    .background(if (buttonViewModel.button.value == 1) Color.White else progressBarColor)
+                    .clickable { buttonViewModel.button.value = 1 },
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "Pendentes", color = texthin)
@@ -85,7 +91,8 @@ fun progressButton() {
                     .height(31.dp)
                     .width(105.dp)
                     .clip(RoundedCornerShape(5.dp))
-                    .background(progressBarColor),
+                    .background(if (buttonViewModel.button.value == 2) Color.White else progressBarColor)
+                    .clickable { buttonViewModel.button.value = 2 },
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "Em Progresso", color = texthin)
@@ -96,7 +103,8 @@ fun progressButton() {
                     .height(31.dp)
                     .width(105.dp)
                     .clip(RoundedCornerShape(5.dp))
-                    .background(progressBarColor),
+                    .background(if (buttonViewModel.button.value == 3) Color.White else progressBarColor)
+                    .clickable { buttonViewModel.button.value = 3 },
                 contentAlignment = Alignment.Center
             ) {
                 Text(text = "Terminados", color = texthin)

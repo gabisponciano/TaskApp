@@ -29,12 +29,14 @@ import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -51,6 +53,8 @@ import com.example.taskapp.ui.theme.texthin
 @Composable
 fun homeScreen(navController: NavController){
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+    val showSearch = remember { mutableStateOf(false) }
+    val searchText = remember { mutableStateOf(TextFieldValue("")) }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -65,7 +69,7 @@ fun homeScreen(navController: NavController){
                 actions = {
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(imageVector = Icons.Default.Search, contentDescription = null, tint = buttonBlue)
-                        
+
                     }
                 }
             )
@@ -87,7 +91,7 @@ fun homeScreen(navController: NavController){
                 .height(118.dp)
                 .width(375.dp),
                 contentAlignment = Alignment.Center){
-                Column {
+                Column (horizontalAlignment = Alignment.CenterHorizontally){
                     Text(text = "Nada aqui. Por agora.",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
@@ -102,7 +106,7 @@ fun homeScreen(navController: NavController){
                 }
             }
             Box {
-                taskButton(tittle = "Crie uma Tesk", rememberNavController())
+                taskButton(tittle = "Crie uma Tesk", rememberNavController(), "task")
             }
         }
     }
