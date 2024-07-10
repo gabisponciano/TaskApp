@@ -20,5 +20,10 @@ class TaskViewModel: ViewModel(){
         _description.value = newDescription
     }
 
+    fun clearFields(){
+        tittle.value = ""
+        description.value = ""
+    }
+
 
 }

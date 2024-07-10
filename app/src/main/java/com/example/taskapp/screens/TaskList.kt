@@ -213,6 +213,64 @@ fun taskList(navController: NavController){
     }
 }
 
+@Composable
+fun ListTask(tittle: String, description: String, status: String, ){
+    OutlinedCard (modifier = Modifier
+        .height(170.dp)
+        .width(327.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.Transparent
+        )
+    ){
+        Column (modifier = Modifier.padding(5.dp)){
+            Row (){
+                Text(text = "Título", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.width(178.dp))
+                Text(text = "Lorem Ipsum", fontSize = 14.sp)
+            }
+        }
+
+        Column (modifier = Modifier.padding(5.dp)){
+            Row (){
+                Text(text = "Descrição", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.width(151.dp))
+                Text(text = "Lorem Ipsum", fontSize = 14.sp)
+            }
+        }
+        Spacer(modifier = Modifier.height(25.dp))
+        Column (modifier = Modifier.padding(5.dp)){
+            Row {
+                Text(text = "Status", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.width(173.dp))
+                Box(modifier = Modifier
+                    .height(24.dp)
+                    .width(89.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(buttonBlue)
+                    .clickable {},
+                    contentAlignment = Alignment.Center
+                )
+                {
+                    Text(text = "TERMINADO", fontSize = 10.sp, color = Color.White)
+                }
+            }
+
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Row (horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+
+        ){
+            changeButton()
+            Spacer(modifier = Modifier.width(10.dp))
+            saveButton()
+
+
+        }
+
+    }
+
+}
 @Preview
 @Composable
 fun listPreview(){

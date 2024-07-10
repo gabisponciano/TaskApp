@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -49,10 +50,12 @@ import com.example.taskapp.components.progressButton
 import com.example.taskapp.components.taskButton
 import com.example.taskapp.ui.theme.buttonBlue
 import com.example.taskapp.ui.theme.texthin
+import com.example.taskapp.viewmodel.ButtonViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun homeScreen(navController: NavHostController){
+    val buttonViewModel = viewModel<ButtonViewModel>()
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 //    val showSearch = remember { mutableStateOf(false) }
 //    val searchText = remember { mutableStateOf(TextFieldValue("")) }
@@ -93,28 +96,76 @@ fun homeScreen(navController: NavHostController){
             Box(modifier = Modifier.height(39.dp)){
                 progressButton()
             }
-            Box (modifier = Modifier
-                .height(118.dp)
-                .width(375.dp),
-                contentAlignment = Alignment.Center){
-                Column (horizontalAlignment = Alignment.CenterHorizontally){
-                    Text(text = "Nada aqui. Por agora.",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center
-                    )
-
-                    Text(text = "É aqui que você encontrará seus projetos finalizados.",
-                        fontSize = 14.sp,
-                        color = texthin,
-                        textAlign = TextAlign.Center
-                        )
-                }
-            }
+            StatusCard(buttonViewModel.button.value, buttonViewModel )
+//            Box (modifier = Modifier
+//                .height(118.dp)
+//                .width(375.dp),
+//                contentAlignment = Alignment.Center){
+//                Column (horizontalAlignment = Alignment.CenterHorizontally){
+//                    Text(text = "Nada aqui. Por agora.",
+//                        fontSize = 18.sp,
+//                        fontWeight = FontWeight.Bold,
+//                        textAlign = TextAlign.Center
+//                    )
+//
+//                    Text(text = "É aqui que você encontrará seus projetos finalizados.",
+//                        fontSize = 14.sp,
+//                        color = texthin,
+//                        textAlign = TextAlign.Center
+//                        )
+//                }
+//            }
 
         }
     }
 }
+
+
+@Composable
+fun StatusCard(status: Int, viewModel: ButtonViewModel){
+    if (viewModel.isEmpty(status)){
+        Box (modifier = Modifier
+            .height(118.dp)
+            .width(375.dp),
+            contentAlignment = Alignment.Center){
+            Column (horizontalAlignment = Alignment.CenterHorizontally){
+                Text(text = "Nada aqui por agora.",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+
+                Text(text = "É aqui que você encontrará seus projetos.",
+                    fontSize = 14.sp,
+                    color = texthin,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }else {
+        when(status){
+            1 -> taskPendentesCard()
+            2 -> taskProgressoCard()
+            3 -> taskTerminadaCard()
+        }
+    }
+}
+
+@Composable
+fun taskPendentesCard(){
+    ListTask(tittle = "Alguma", description ="hdkc" , status = "Pendente")
+}
+
+@Composable
+fun taskProgressoCard(){
+    ListTask(tittle = "Alguma", description ="hdkc" , status = "Prgressp")
+}
+
+@Composable
+fun taskTerminadaCard(){
+    ListTask(tittle = "Alguma", description ="hdkc" , status = "Terminado")
+}
+
 
 @Preview
 @Composable

@@ -55,7 +55,7 @@ import com.example.taskapp.viewmodel.TaskViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun newTaskScreen(navController: NavController, clear:()->Unit = {}){
+fun newTaskScreen(navController: NavController){
 
     val taskViewModel = viewModel<TaskViewModel>()
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
@@ -85,6 +85,7 @@ fun newTaskScreen(navController: NavController, clear:()->Unit = {}){
                         fontSize = 12.sp,
                         color = buttonBlue,
                         modifier = Modifier.clickable {
+                            taskViewModel.clearFields()
 
                         }
                     )
