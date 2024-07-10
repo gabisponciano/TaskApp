@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 }
 
 android {
@@ -50,8 +51,22 @@ android {
 }
 
 dependencies {
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.3.8")
-    implementation(platform("androidx.compose:compose-bom:2023.10.01"))
+
+    implementation("androidx.room:room-runtime:2.6.0")
+    implementation("androidx.core:core-ktx:1.12.0")
+    ksp("androidx.room:room-compiler:2.6.0")
+    implementation("androidx.room:room-ktx:2.6.0")
+
+    // Koin
+    implementation(libs.koin.android)
+    implementation(libs.insert.koin.koin.android)
+    //implementation(libs.insert.koin.koin.android)
+    implementation(libs.koin.android.v340)
+    implementation(libs.koin.androidx.compose)
+
+
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.compose.bom.v20231001)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

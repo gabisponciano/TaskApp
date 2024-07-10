@@ -25,26 +25,39 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             TaskAppTheme {
-                Navigation()
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = "task"){
+                    composable("home"){
+
+                        homeScreen(navController)
+                    }
+                    composable("task"){
+                        newTaskScreen(navController)
+                    }
+
+                    composable("list"){
+                        taskList()
+                    }
+                }
             }
         }
     }
 }
 
 
-@Composable
-fun Navigation(){
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home"){
-        composable("home"){
-            homeScreen(navController)
-        }
-        composable("task"){
-            newTaskScreen(navController)
-        }
-
-        composable("list"){
-            taskList()
-        }
-    }
-}
+//@Composable
+//fun Navigation(){
+//    val navController = rememberNavController()
+//    NavHost(navController = navController, startDestination = "home"){
+//        composable("home"){
+//            homeScreen(navController)
+//        }
+//        composable("task"){
+//            newTaskScreen(navController)
+//        }
+//
+//        composable("list"){
+//            taskList()
+//        }
+//    }
+//}

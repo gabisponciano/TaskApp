@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,16 +46,32 @@ fun screen(){
 
 @Composable
 fun taskButton(tittle:String, navController: NavController, route:String){
-    Box(modifier = Modifier
-        .height(48.dp)
-        .width(327.dp)
-        .clip(RoundedCornerShape(5.dp))
-        .background(buttonBlue)
-        .clickable { navController.navigate(route) },
-        contentAlignment = Alignment.Center
+    Column (modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+
     ){
-        Text(text = tittle, fontSize = 12.sp, color = Color.White)
+        Box(modifier = Modifier
+            .height(48.dp)
+            .width(327.dp)
+            .clip(RoundedCornerShape(5.dp))
+            .background(buttonBlue)
+            .clickable { navController.navigate(route) },
+            contentAlignment = Alignment.Center
+        ){
+            Text(text = tittle, fontSize = 12.sp, color = Color.White)
+        }
     }
+//    Box(modifier = Modifier
+//        .height(48.dp)
+//        .width(327.dp)
+//        .clip(RoundedCornerShape(5.dp))
+//        .background(buttonBlue)
+//        .clickable { navController.navigate(route) },
+//        contentAlignment = Alignment.Center
+//    ){
+//        Text(text = tittle, fontSize = 12.sp, color = Color.White)
+//    }
 }
 
 
@@ -77,37 +94,37 @@ fun progressButton() {
             Box(
                 modifier = Modifier
                     .height(31.dp)
-                    .width(107.dp)
-                    .clip(RoundedCornerShape(5.dp))
+                    .width(110.dp)
+                    .clip(RoundedCornerShape(10.dp))
                     .background(if (buttonViewModel.button.value == 1) Color.White else progressBarColor)
                     .clickable { buttonViewModel.button.value = 1 },
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "Pendentes", color = texthin)
+                Text(text = "Pendentes", color = texthin, fontSize = 12.sp)
             }
             Text(text = "|", color = texthin)
             Box(
                 modifier = Modifier
                     .height(31.dp)
-                    .width(105.dp)
-                    .clip(RoundedCornerShape(5.dp))
+                    .width(110.dp)
+                    .clip(RoundedCornerShape(10.dp))
                     .background(if (buttonViewModel.button.value == 2) Color.White else progressBarColor)
                     .clickable { buttonViewModel.button.value = 2 },
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "Em Progresso", color = texthin)
+                Text(text = "Em Progresso", color = texthin, fontSize = 12.sp)
             }
             Text(text = "|", color = texthin)
             Box(
                 modifier = Modifier
                     .height(31.dp)
-                    .width(105.dp)
-                    .clip(RoundedCornerShape(5.dp))
+                    .width(110.dp)
+                    .clip(RoundedCornerShape(10.dp))
                     .background(if (buttonViewModel.button.value == 3) Color.White else progressBarColor)
                     .clickable { buttonViewModel.button.value = 3 },
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "Terminados", color = texthin)
+                Text(text = "Terminados", color = texthin, fontSize = 12.sp)
             }
 
         }

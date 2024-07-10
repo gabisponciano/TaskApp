@@ -8,6 +8,9 @@ class ChangeViewModel: ViewModel() {
     private val _tittle = mutableStateOf<String>("")
     val tittle: MutableState<String> = _tittle
 
+    private val _pressed = mutableStateOf<Boolean>(false)
+    val pressed: MutableState<Boolean> = _pressed
+
     private val _description = mutableStateOf<String>("")
     val description: MutableState<String> = _description
 

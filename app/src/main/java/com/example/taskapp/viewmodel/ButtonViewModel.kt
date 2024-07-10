@@ -9,6 +9,7 @@ class ButtonViewModel: ViewModel() {
     val button: MutableState<Int> = _button
 
 
+
     fun buttonProgre(newButton:Int){
         _button.value = newButton
     }

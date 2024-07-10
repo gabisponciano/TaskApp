@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -58,6 +59,7 @@ fun taskList(){
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier.padding(5.dp),
                 colors = topAppBarColors(
                     containerColor = Color.White
                 ),
@@ -73,6 +75,13 @@ fun taskList(){
                     }
                 }
             )
+        },
+        bottomBar = {
+            BottomAppBar (
+                containerColor = Color.White
+            ){
+                taskButton(tittle = "Crie uma Tesk", rememberNavController(), "task")
+            }
         },
 
         ) { innerPadding ->
@@ -195,10 +204,7 @@ fun taskList(){
                     modifier = Modifier.padding(8.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(80.dp))
-            Box {
-                taskButton(tittle = "Crie uma Tesk", rememberNavController(), "")
-            }
+
         }
     }
 }

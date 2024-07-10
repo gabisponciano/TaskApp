@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,7 +38,9 @@ import com.example.taskapp.components.taskButton
 import com.example.taskapp.ui.theme.backButton
 import com.example.taskapp.ui.theme.buttonBlue
 import com.example.taskapp.ui.theme.dividerColor
+import com.example.taskapp.ui.theme.progressBarColor
 import com.example.taskapp.ui.theme.textfield
+import com.example.taskapp.viewmodel.ButtonViewModel
 import com.example.taskapp.viewmodel.ChangeViewModel
 import com.example.taskapp.viewmodel.TaskViewModel
 
@@ -46,12 +49,14 @@ import com.example.taskapp.viewmodel.TaskViewModel
 fun changeTaskScreen(){
 
     val changeViewModel = viewModel<ChangeViewModel>()
+    val buttonViewModel = viewModel<ButtonViewModel>()
 
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier.padding(5.dp),
                 colors = topAppBarColors(
                     containerColor = Color.White
                 ),
@@ -72,12 +77,21 @@ fun changeTaskScreen(){
                     Text(text = "Limpar",
                         fontSize = 12.sp,
                         color = buttonBlue,
-                        modifier = Modifier.clickable {
+                        modifier = Modifier
+                            .clickable {
+
 
                         }
                     )
                 }
             )
+        },
+        bottomBar = {
+            BottomAppBar (
+                containerColor = Color.White
+            ){
+                taskButton(tittle = "Criar", rememberNavController(), "task")
+            }
         },
     ) { innerPadding ->
         Column(
@@ -134,8 +148,10 @@ fun changeTaskScreen(){
                                     .height(24.dp)
                                     .width(81.dp)
                                     .clip(RoundedCornerShape(10.dp))
-                                    .background(backButton)
-                                    .clickable {},
+                                    .background(if (buttonViewModel.button.value == 1) buttonBlue else backButton)
+                                    .clickable {
+                                        buttonViewModel.button.value = 1
+                                    },
                                     contentAlignment = Alignment.Center
                                 )
                                 {
@@ -145,8 +161,8 @@ fun changeTaskScreen(){
                                     .height(24.dp)
                                     .width(109.dp)
                                     .clip(RoundedCornerShape(10.dp))
-                                    .background(backButton)
-                                    .clickable {},
+                                    .background(if (buttonViewModel.button.value == 2) buttonBlue else backButton)
+                                    .clickable {buttonViewModel.button.value = 2},
                                     contentAlignment = Alignment.Center
                                 )
                                 {
@@ -157,8 +173,8 @@ fun changeTaskScreen(){
                                     .height(24.dp)
                                     .width(89.dp)
                                     .clip(RoundedCornerShape(10.dp))
-                                    .background(backButton)
-                                    .clickable {},
+                                    .background(if (buttonViewModel.button.value == 3) buttonBlue else backButton)
+                                    .clickable {buttonViewModel.button.value = 3},
                                     contentAlignment = Alignment.Center
                                 )
                                 {
@@ -176,13 +192,8 @@ fun changeTaskScreen(){
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
 
-
                 }
 
-
-            }
-            Box {
-                taskButton(tittle = "Criar", rememberNavController(), "" )
             }
         }
     }

@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.taskapp.components.LockScreenOrientation
 import com.example.taskapp.components.progressButton
@@ -51,13 +52,14 @@ import com.example.taskapp.ui.theme.texthin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun homeScreen(navController: NavController){
+fun homeScreen(navController: NavHostController){
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-    val showSearch = remember { mutableStateOf(false) }
-    val searchText = remember { mutableStateOf(TextFieldValue("")) }
+//    val showSearch = remember { mutableStateOf(false) }
+//    val searchText = remember { mutableStateOf(TextFieldValue("")) }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier.padding(5.dp),
                 colors = topAppBarColors(
                     containerColor = Color.White
                 ),
@@ -74,7 +76,13 @@ fun homeScreen(navController: NavController){
                 }
             )
         },
-
+        bottomBar = {
+            BottomAppBar (
+                containerColor = Color.White
+            ){
+                taskButton(tittle = "Crie uma Tesk", rememberNavController(), "task")
+            }
+        },
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -105,9 +113,7 @@ fun homeScreen(navController: NavController){
                         )
                 }
             }
-            Box {
-                taskButton(tittle = "Crie uma Tesk", rememberNavController(), "task")
-            }
+
         }
     }
 }
