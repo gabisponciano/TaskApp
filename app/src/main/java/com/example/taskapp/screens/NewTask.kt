@@ -55,7 +55,7 @@ import com.example.taskapp.viewmodel.TaskViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun newTaskScreen(navController: NavController){
+fun newTaskScreen(navController: NavController, clear:()->Unit = {}){
 
     val taskViewModel = viewModel<TaskViewModel>()
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
@@ -71,7 +71,7 @@ fun newTaskScreen(navController: NavController){
                 navigationIcon ={ Text(text = "Cancelar",
                     fontSize = 12.sp,
                     color = buttonBlue,
-                    modifier = Modifier.clickable {  }
+                    modifier = Modifier.clickable { navController.navigate("home") }
 
                     )}
                 ,

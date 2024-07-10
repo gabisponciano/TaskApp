@@ -10,26 +10,23 @@ import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 
-@Dao
-interface TaskDao {
+//@Dao
+//interface TaskDao {
 //    //Precisa de Uptade, Deletar, Criar e Procurar
 //
 //    @Insert(onConflict = OnConflictStrategy.REPLACE) // Atualiza e Insere
-//    suspend fun insertTask(task: Task)
+//    suspend fun insertTask(task: TaskEntity)
 //
 //    @Delete
-//    suspend fun deleteTask(task: Task)
+//    suspend fun deleteTask(task: TaskEntity)
 //
-//    @Query ("SELECT * FROM Task WHERE id = :id")
-//    suspend fun deleteTask(id:String)
+//    @Query ("SELECT * FROM TaskEntity WHERE id = :id")
+//    suspend fun deleteTaskId(id:String)
 //
-//    @Query("SELECT * FROM Task")
-//    suspend fun findAll():Flow<List<Task>>
+//    @Query("SELECT * FROM TaskEntity")
+//    fun findAll():Flow<List<TaskEntity>>
 //
 //    @Update()
-//    suspend fun uptadeTask(task: Task)
+//    suspend fun uptadeTask(task: TaskEntity)
 //
-//
-
-
-}
+//}

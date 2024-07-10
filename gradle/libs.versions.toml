@@ -17,6 +17,7 @@ composeBom = "2024.04.01"
 lifecycleViewmodelCompose = "2.8.3"
 navigationCompose = "2.7.7"
 roomRuntime = "2.6.1"
+playServicesTasks = "18.2.0"
 
 [libraries]
 androidx-compose-bom-v20231001 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
@@ -46,6 +47,7 @@ koin-android-v340 = { module = "io.insert-koin:koin-android", version.ref = "koi
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroidxCompose" }
 koin-core = { module = "io.insert-koin:koin-core" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+play-services-tasks = { group = "com.google.android.gms", name = "play-services-tasks", version.ref = "playServicesTasks" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
