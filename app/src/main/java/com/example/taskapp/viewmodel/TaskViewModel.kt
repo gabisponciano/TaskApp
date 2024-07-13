@@ -1,29 +1,59 @@
 package com.example.taskapp.viewmodel
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.taskapp.db.TaskEntity
+import com.example.taskapp.models.TaskModel
+import com.example.taskapp.repository.TaskRepository
+import kotlinx.coroutines.launch
+import java.util.UUID
 
-class TaskViewModel: ViewModel(){
-    private val _tittle = mutableStateOf<String>("")
-    val tittle: MutableState<String> = _tittle
+class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
 
-    private val _description = mutableStateOf<String>("")
-    val description: MutableState<String> = _description
+    var title by mutableStateOf("")
+    var description by mutableStateOf("")
+    var status by mutableStateOf("")
 
 
-    fun tittleTask(newTask:String){
-        _tittle.value = newTask
+
+    fun clearFilds(){
+        title = ""
+        description = ""
+        status = ""
     }
 
-    fun descriptionTask(newDescription:String){
-        _description.value = newDescription
+    fun saveTask(){
+        if(
+            title.isNotEmpty() &&
+            description.isNotEmpty()
+        ){
+            viewModelScope.launch {
+                save(title,description,status)
+            }
+        }
+
     }
 
-    fun clearFields(){
-        tittle.value = ""
-        description.value = ""
+    private suspend fun save(
+        title:String,
+        description:String,
+        status:String
+    ){
+        repository.save(
+            TaskModel(
+                id = UUID.randomUUID().toString(),
+                title = title,
+                description = description,
+                status = status
+            )
+        )
     }
-
-
 }
+

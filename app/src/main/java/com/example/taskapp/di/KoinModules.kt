@@ -1,15 +1,35 @@
 package com.example.taskapp.di
 
-//import org.koin.androidx.viewmodel.dsl.viewModelOf
-//import org.koin.core.module.dsl.singleOf
-//import org.koin.dsl.module
-//
-//val appModule = module{
-//    viewModelOf(::HomeViewModel)
-//    viewModelOf(::ChangeViewModel)
-//    viewModelOf(::TaskListViewModel)
-//}
-//
-//val storageModule = module {
-//    singleOf(::TaskRepository)
-//}
+import androidx.room.Room
+import com.example.taskapp.db.TaskDao
+import com.example.taskapp.db.TaskDatabase
+import com.example.taskapp.repository.TaskRepository
+import com.example.taskapp.viewmodel.HomeViewModel
+
+import com.example.taskapp.viewmodel.TaskViewModel
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+import org.koin.core.module.dsl.singleOf
+import org.koin.androidx.viewmodel.dsl.viewModelOf
+
+import org.koin.dsl.module
+
+val appModule = module {
+    viewModelOf(::TaskViewModel)
+    viewModelOf (::HomeViewModel)
+
+}
+
+val storageModule = module {
+    singleOf(::TaskRepository)
+    single {
+        Room.databaseBuilder(
+            androidContext(),
+            TaskDatabase::class.java, "task-database.db"
+        ).build()
+    }
+    single {
+        get<TaskDatabase>().TaskDao()
+    }
+}

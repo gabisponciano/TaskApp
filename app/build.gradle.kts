@@ -56,13 +56,14 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.0")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation(libs.play.services.tasks)
+    implementation(libs.androidx.runtime.livedata)
     ksp("androidx.room:room-compiler:2.6.0")
     implementation("androidx.room:room-ktx:2.6.0")
 
     // Koin
     implementation(libs.koin.android)
     implementation(libs.insert.koin.koin.android)
-    implementation("io.insert-koin:koin-android:3.4.0")
+    implementation("io.insert-koin:koin-android:3.5.6")
     implementation("io.insert-koin:koin-androidx-compose:3.4.0")
 
 

@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -31,21 +32,20 @@ import com.example.taskapp.ui.theme.backButton
 import com.example.taskapp.ui.theme.buttonBlue
 import com.example.taskapp.ui.theme.progressBarColor
 import com.example.taskapp.ui.theme.redbutton
-import com.example.taskapp.ui.theme.texthin
-import com.example.taskapp.viewmodel.ButtonViewModel
-import com.example.taskapp.viewmodel.ChangeViewModel
+
+
 
 @Composable
 fun screen(){
     Column (modifier = Modifier.fillMaxSize()){
 //        taskButton(tittle = "Crie uma task", rememberNavController(), "task")
-        progressButton()
+        //progressButton()
 
     }
 }
 
 @Composable
-fun taskButton(tittle:String, onClick: () -> Unit){
+fun taskButton(title:String, onClick: () -> Unit){
     Column (modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -59,7 +59,7 @@ fun taskButton(tittle:String, onClick: () -> Unit){
             .clickable { onClick() },
             contentAlignment = Alignment.Center
         ){
-            Text(text = tittle, fontSize = 12.sp, color = Color.White)
+            Text(text = title, fontSize = 12.sp, color = Color.White)
         }
     }
 //    Box(modifier = Modifier
@@ -75,62 +75,62 @@ fun taskButton(tittle:String, onClick: () -> Unit){
 }
 
 
-@Composable
-fun progressButton() {
-    //val selected = remember { mutableStateOf(0) }
-
-    val buttonViewModel = viewModel<ButtonViewModel>()
-
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(5.dp))
-            .background(progressBarColor),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .height(31.dp)
-                    .width(110.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(if (buttonViewModel.button.value == 1) Color.White else progressBarColor)
-                    .clickable { buttonViewModel.button.value = 1 },
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Pendentes", color = texthin, fontSize = 12.sp)
-            }
-            Text(text = "|", color = texthin)
-            Box(
-                modifier = Modifier
-                    .height(31.dp)
-                    .width(110.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(if (buttonViewModel.button.value == 2) Color.White else progressBarColor)
-                    .clickable { buttonViewModel.button.value = 2 },
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Em Progresso", color = texthin, fontSize = 12.sp)
-            }
-            Text(text = "|", color = texthin)
-            Box(
-                modifier = Modifier
-                    .height(31.dp)
-                    .width(110.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(if (buttonViewModel.button.value == 3) Color.White else progressBarColor)
-                    .clickable { buttonViewModel.button.value = 3 },
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "Terminados", color = texthin, fontSize = 12.sp)
-            }
-
-        }
-
-    }
-}
+//@Composable
+//fun progressButton() {
+//    //val selected = remember { mutableStateOf(0) }
+//
+//    val buttonViewModel = viewModel<ButtonViewModel>()
+//
+//    Box(
+//        modifier = Modifier
+//            .clip(RoundedCornerShape(5.dp))
+//            .background(progressBarColor),
+//        contentAlignment = Alignment.Center
+//    ) {
+//        Row(
+//            verticalAlignment = Alignment.CenterVertically,
+//            horizontalArrangement = Arrangement.spacedBy(12.dp)
+//        ) {
+//            Box(
+//                modifier = Modifier
+//                    .height(31.dp)
+//                    .width(110.dp)
+//                    .clip(RoundedCornerShape(10.dp))
+//                    .background(if (buttonViewModel.button.value == 1) Color.White else progressBarColor)
+//                    .clickable { buttonViewModel.button.value = 1 },
+//                contentAlignment = Alignment.Center
+//            ) {
+//                Text(text = "Pendentes", color = texthin, fontSize = 12.sp)
+//            }
+//            Text(text = "|", color = texthin)
+//            Box(
+//                modifier = Modifier
+//                    .height(31.dp)
+//                    .width(110.dp)
+//                    .clip(RoundedCornerShape(10.dp))
+//                    .background(if (buttonViewModel.button.value == 2) Color.White else progressBarColor)
+//                    .clickable { buttonViewModel.button.value = 2 },
+//                contentAlignment = Alignment.Center
+//            ) {
+//                Text(text = "Em Progresso", color = texthin, fontSize = 12.sp)
+//            }
+//            Text(text = "|", color = texthin)
+//            Box(
+//                modifier = Modifier
+//                    .height(31.dp)
+//                    .width(110.dp)
+//                    .clip(RoundedCornerShape(10.dp))
+//                    .background(if (buttonViewModel.button.value == 3) Color.White else progressBarColor)
+//                    .clickable { buttonViewModel.button.value = 3 },
+//                contentAlignment = Alignment.Center
+//            ) {
+//                Text(text = "Terminados", color = texthin, fontSize = 12.sp)
+//            }
+//
+//        }
+//
+//    }
+//}
 
 
 @Composable

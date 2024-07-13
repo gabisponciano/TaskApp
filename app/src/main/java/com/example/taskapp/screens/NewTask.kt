@@ -44,7 +44,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.taskapp.components.LockScreenOrientation
-import com.example.taskapp.components.progressButton
 import com.example.taskapp.components.taskButton
 import com.example.taskapp.ui.theme.backButton
 import com.example.taskapp.ui.theme.buttonBlue
@@ -52,12 +51,13 @@ import com.example.taskapp.ui.theme.dividerColor
 import com.example.taskapp.ui.theme.textfield
 import com.example.taskapp.ui.theme.texthin
 import com.example.taskapp.viewmodel.TaskViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun newTaskScreen(navController: NavController){
 
-    val taskViewModel = viewModel<TaskViewModel>()
+    val taskViewModel = koinViewModel<TaskViewModel>()
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
     Scaffold(
@@ -73,7 +73,7 @@ fun newTaskScreen(navController: NavController){
                     color = buttonBlue,
                     modifier = Modifier.clickable { navController.navigate("home") }
 
-                    )}
+                )}
                 ,
                 title = {
                     Text("Nova Task",
@@ -85,7 +85,7 @@ fun newTaskScreen(navController: NavController){
                         fontSize = 12.sp,
                         color = buttonBlue,
                         modifier = Modifier.clickable {
-                            taskViewModel.clearFields()
+                            taskViewModel.clearFilds()
 
                         }
                     )
@@ -96,8 +96,9 @@ fun newTaskScreen(navController: NavController){
             BottomAppBar (
                 containerColor = Color.White
             ){
-                taskButton(tittle = "Criar") {
-                    navController.navigate("")
+                taskButton(title = "Criar") {
+                    taskViewModel.saveTask()
+                    navController.navigate("home")
 
                 }
             }
@@ -116,8 +117,8 @@ fun newTaskScreen(navController: NavController){
                 .fillMaxWidth(),
                 contentAlignment = Alignment.Center){
                 Column (horizontalAlignment = Alignment.CenterHorizontally){
-                    OutlinedTextField(value = taskViewModel.tittle.value,
-                        onValueChange = {taskViewModel.tittleTask(it)},
+                    OutlinedTextField(value = taskViewModel.title,
+                        onValueChange = { taskViewModel.title = it },
                         singleLine = true,
                         label = { Text(text = ("Título"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
@@ -131,8 +132,8 @@ fun newTaskScreen(navController: NavController){
 
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
-                    OutlinedTextField(value = taskViewModel.description.value,
-                        onValueChange = {taskViewModel.descriptionTask(it)},
+                    OutlinedTextField(value = taskViewModel.description,
+                        onValueChange = { taskViewModel.description = it },
                         label = { Text(text = ("Descrição"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
                             .width(343.dp)
@@ -149,46 +150,47 @@ fun newTaskScreen(navController: NavController){
                         .height(100.dp)
                         .width(343.dp),
                         contentAlignment = Alignment.Center
-                        ){
+                    ){
                         Column (verticalArrangement = Arrangement.spacedBy(18.dp)){
-                            Text(text = "Status",fontSize = 14.sp, color = textfield)
-                            Row (horizontalArrangement = Arrangement.spacedBy(8.dp)){
-                                Box(modifier = Modifier
-                                    .height(24.dp)
-                                    .width(81.dp)
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .background(backButton)
-                                    .clickable {},
-                                    contentAlignment = Alignment.Center
-                                    )
-                                    {
-                                    Text(text = "PENDENTE", fontSize = 10.sp, color = buttonBlue)
-                                }
-                                Box(modifier = Modifier
-                                    .height(24.dp)
-                                    .width(109.dp)
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .background(backButton)
-                                    .clickable {},
-                                    contentAlignment = Alignment.Center
-                                )
-                                {
-                                    Text(text = "EM PROGRESSO", fontSize = 10.sp, color = buttonBlue)
-                                }
-
-                                Box(modifier = Modifier
-                                    .height(24.dp)
-                                    .width(89.dp)
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .background(backButton)
-                                    .clickable {},
-                                    contentAlignment = Alignment.Center
-                                )
-                                {
-                                    Text(text = "TERMINADO", fontSize = 10.sp, color = buttonBlue)
-                                }
-
-                            }
+                            TaskStatusSelector(taskViewModel = taskViewModel)
+//                            Text(text = "Status",fontSize = 14.sp, color = textfield)
+//                            Row (horizontalArrangement = Arrangement.spacedBy(8.dp)){
+//                                Box(modifier = Modifier
+//                                    .height(24.dp)
+//                                    .width(81.dp)
+//                                    .clip(RoundedCornerShape(10.dp))
+//                                    .background(backButton)
+//                                    .clickable {},
+//                                    contentAlignment = Alignment.Center
+//                                )
+//                                {
+//                                    Text(text = "PENDENTE", fontSize = 10.sp, color = buttonBlue)
+//                                }
+//                                Box(modifier = Modifier
+//                                    .height(24.dp)
+//                                    .width(109.dp)
+//                                    .clip(RoundedCornerShape(10.dp))
+//                                    .background(backButton)
+//                                    .clickable {},
+//                                    contentAlignment = Alignment.Center
+//                                )
+//                                {
+//                                    Text(text = "EM PROGRESSO", fontSize = 10.sp, color = buttonBlue)
+//                                }
+//
+//                                Box(modifier = Modifier
+//                                    .height(24.dp)
+//                                    .width(89.dp)
+//                                    .clip(RoundedCornerShape(10.dp))
+//                                    .background(backButton)
+//                                    .clickable {},
+//                                    contentAlignment = Alignment.Center
+//                                )
+//                                {
+//                                    Text(text = "TERMINADO", fontSize = 10.sp, color = buttonBlue)
+//                                }
+//
+//                            }
 
                         }
 
@@ -205,6 +207,42 @@ fun newTaskScreen(navController: NavController){
         }
     }
 }
+
+@Composable
+fun TaskStatusSelector(taskViewModel: TaskViewModel) {
+    Box(
+        modifier = Modifier
+            .height(100.dp)
+            .width(343.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
+            Text(text = "Status", fontSize = 14.sp, color = textfield)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                // Implementação dos botões de status
+                StatusButton("PENDENTE", taskViewModel)
+                StatusButton("EM PROGRESSO", taskViewModel)
+                StatusButton("TERMINADO", taskViewModel)
+            }
+        }
+    }
+    Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
+}
+
+@Composable
+fun StatusButton(status: String, taskViewModel: TaskViewModel) {
+    Box(
+        modifier = Modifier
+            .height(24.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(backButton)  // backButton é a cor de fundo
+            .clickable { taskViewModel.status = status },
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = status, fontSize = 10.sp, color = buttonBlue)
+    }
+}
+
 
 @Preview
 @Composable
