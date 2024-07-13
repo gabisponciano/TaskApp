@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -46,6 +48,7 @@ import com.example.taskapp.components.CardItem
 import com.example.taskapp.components.LockScreenOrientation
 import com.example.taskapp.components.taskButton
 import com.example.taskapp.models.TaskModel
+import com.example.taskapp.state.TasksListUiState
 import com.example.taskapp.ui.theme.buttonBlue
 import com.example.taskapp.ui.theme.texthin
 import com.example.taskapp.viewmodel.HomeViewModel
@@ -54,8 +57,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun homeScreen(navController: NavHostController){
-    val homeViewModel = koinViewModel<HomeViewModel>()
+fun homeScreen(navController: NavHostController, uiState: TasksListUiState, onSaveClick: ()-> Unit){
+    //val homeViewModel = koinViewModel<HomeViewModel>()
 
  //   val tasks by taskViewModel.tasks.observeAsState(initial = emptyList())
 //    val buttonViewModel = viewModel<ButtonViewModel>()
@@ -101,14 +104,12 @@ fun homeScreen(navController: NavHostController){
             Box(modifier = Modifier.height(39.dp)){
 
             }
+            LazyColumn {
+                items(uiState.tasks){task->
+                    CardItem(title = task.title, description = task.description, status = task.status)
 
-            if (homeViewModel.listAll == null){
-                emptyTasks()
-
-            }else{
-                homeViewModel.listAll?.forEachIndexed { _, task ->
-                CardItem(task.title,task.description,task.status)
                 }
+            }
 //            Box (modifier = Modifier
 //                .height(118.dp)
 //                .width(375.dp),
@@ -131,7 +132,7 @@ fun homeScreen(navController: NavHostController){
         }
     }
 }
-}
+
 
 
 
@@ -241,9 +242,9 @@ fun emptyTasks(){
 //    }
 //}
 
-
-@Preview
-@Composable
-fun HomePreview(){
-    homeScreen(navController = rememberNavController())
-}
+//
+//@Preview
+//@Composable
+//fun HomePreview(){
+//    homeScreen(navController = rememberNavController())
+//}

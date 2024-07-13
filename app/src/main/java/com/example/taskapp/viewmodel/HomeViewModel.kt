@@ -8,47 +8,34 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskapp.models.TaskModel
 import com.example.taskapp.repository.TaskRepository
+import com.example.taskapp.repository.toTask
+import com.example.taskapp.state.TasksListUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
 
 class HomeViewModel (private val repository:TaskRepository):ViewModel(){
 
-    var itemSelected by mutableIntStateOf(1)
-    var listAll by mutableStateOf<Array<TaskModel>?>(null)
-    var listStatus by mutableStateOf(listOf("Pendentes","Em Progresso", "Terminado"))
-    private val tempListModel = mutableListOf<TaskModel>()
+    private val _uiState: MutableStateFlow<TasksListUiState> = MutableStateFlow(TasksListUiState())
 
-    init {
-        viewModelScope.launch {
-            getAllTasks()
-        }
-    }
-
-    private suspend fun getAllTasks(){
-        try {
-            val resultList = repository.getAll()
-            for (i in resultList.indices){
-                tempListModel.add(resultList[i])
-                println("${tempListModel[i].title} home-viewmodel")
+    val uiState
+        get() = _uiState
+            .combine(repository.tasks){ uiState, tasks ->
+                uiState.copy(tasks = tasks.map{it.toTask()})
             }
-        }catch (e:Exception){
-            println(e.message)
-        }
-    }
-
-    suspend fun save(
-        title:String,
-        description: String,
-        status: String
-    ){
-        repository.save(
-            TaskModel(
-                id = UUID.randomUUID().toString(),
-                title = title,
-                description = description,
-                status = status
-            )
-        )
-    }
+//    init {
+//        viewModelScope.launch {
+//            _uiState.update { currentState ->
+//                currentState.copy(onTaskDoneChange = { task ->
+//                    viewModelScope.launch {
+//                        repository
+//                    }
+//
+//                })
+//            }
+//        }
+//    }
 
 }

@@ -31,6 +31,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,20 +46,27 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.taskapp.components.LockScreenOrientation
 import com.example.taskapp.components.taskButton
+import com.example.taskapp.state.TaskFormUiState
 import com.example.taskapp.ui.theme.backButton
 import com.example.taskapp.ui.theme.buttonBlue
 import com.example.taskapp.ui.theme.dividerColor
 import com.example.taskapp.ui.theme.textfield
 import com.example.taskapp.ui.theme.texthin
 import com.example.taskapp.viewmodel.TaskViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun newTaskScreen(navController: NavController){
+fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSaveCLick: () -> Unit){
 
-    val taskViewModel = koinViewModel<TaskViewModel>()
+    //val taskViewModel = koinViewModel<TaskViewModel>()
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+    val title = uiState.title
+    val description = uiState.description
+    val status = uiState.status
+    //val scope = rememberCoroutineScope()
+
 
     Scaffold(
         topBar = {
@@ -85,7 +93,7 @@ fun newTaskScreen(navController: NavController){
                         fontSize = 12.sp,
                         color = buttonBlue,
                         modifier = Modifier.clickable {
-                            taskViewModel.clearFilds()
+//                            taskViewModel.clearFilds()
 
                         }
                     )
@@ -97,8 +105,7 @@ fun newTaskScreen(navController: NavController){
                 containerColor = Color.White
             ){
                 taskButton(title = "Criar") {
-                    taskViewModel.saveTask()
-                    navController.navigate("home")
+                    onSaveCLick()
 
                 }
             }
@@ -117,8 +124,8 @@ fun newTaskScreen(navController: NavController){
                 .fillMaxWidth(),
                 contentAlignment = Alignment.Center){
                 Column (horizontalAlignment = Alignment.CenterHorizontally){
-                    OutlinedTextField(value = taskViewModel.title,
-                        onValueChange = { taskViewModel.title = it },
+                    OutlinedTextField(value = title,
+                        onValueChange = { uiState.onTitleChange },
                         singleLine = true,
                         label = { Text(text = ("Título"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
@@ -132,8 +139,8 @@ fun newTaskScreen(navController: NavController){
 
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
-                    OutlinedTextField(value = taskViewModel.description,
-                        onValueChange = { taskViewModel.description = it },
+                    OutlinedTextField(value = description,
+                        onValueChange = { uiState.onDescriptionChange },
                         label = { Text(text = ("Descrição"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
                             .width(343.dp)
@@ -146,13 +153,18 @@ fun newTaskScreen(navController: NavController){
 
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
-                    Box (modifier = Modifier
-                        .height(100.dp)
-                        .width(343.dp),
-                        contentAlignment = Alignment.Center
-                    ){
-                        Column (verticalArrangement = Arrangement.spacedBy(18.dp)){
-                            TaskStatusSelector(taskViewModel = taskViewModel)
+                    OutlinedTextField(value = status,
+                        onValueChange = { uiState.onDescriptionStatus },
+                        label = { Text(text = ("Status"), color = textfield, fontSize = 14.sp) },
+                        modifier = Modifier
+                            .width(343.dp)
+                            .height(52.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor= Color.Transparent
+                        )
+                    )
+
 //                            Text(text = "Status",fontSize = 14.sp, color = textfield)
 //                            Row (horizontalArrangement = Arrangement.spacedBy(8.dp)){
 //                                Box(modifier = Modifier
@@ -205,47 +217,5 @@ fun newTaskScreen(navController: NavController){
 
             }
         }
-    }
-}
-
-@Composable
-fun TaskStatusSelector(taskViewModel: TaskViewModel) {
-    Box(
-        modifier = Modifier
-            .height(100.dp)
-            .width(343.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(verticalArrangement = Arrangement.spacedBy(18.dp)) {
-            Text(text = "Status", fontSize = 14.sp, color = textfield)
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                // Implementação dos botões de status
-                StatusButton("PENDENTE", taskViewModel)
-                StatusButton("EM PROGRESSO", taskViewModel)
-                StatusButton("TERMINADO", taskViewModel)
-            }
-        }
-    }
-    Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
-}
-
-@Composable
-fun StatusButton(status: String, taskViewModel: TaskViewModel) {
-    Box(
-        modifier = Modifier
-            .height(24.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .background(backButton)  // backButton é a cor de fundo
-            .clickable { taskViewModel.status = status },
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = status, fontSize = 10.sp, color = buttonBlue)
-    }
-}
 
 
-@Preview
-@Composable
-fun newTaskScreenPreview(){
-    newTaskScreen(navController = rememberNavController())
-}

@@ -12,48 +12,57 @@ import androidx.lifecycle.viewModelScope
 import com.example.taskapp.db.TaskEntity
 import com.example.taskapp.models.TaskModel
 import com.example.taskapp.repository.TaskRepository
+import com.example.taskapp.state.TaskFormUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
 
 class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
 
-    var title by mutableStateOf("")
-    var description by mutableStateOf("")
-    var status by mutableStateOf("")
+    private val _uiState:MutableStateFlow<TaskFormUiState> = MutableStateFlow(TaskFormUiState())
+    val uiState = _uiState.asStateFlow()
 
+    init {
+        _uiState.update { currentState ->
+            currentState.copy(
+                onTitleChange = { title ->
+                    _uiState.update {
+                        it.copy(title = title)
+                    }
 
+                },
+                onDescriptionChange = { description ->
+                    _uiState.update {
+                        it.copy(description = description)
+                    }
+                },
+                onDescriptionStatus = {status ->
+                    _uiState.update {
+                        it.copy(status = status)
+                    }
 
-    fun clearFilds(){
-        title = ""
-        description = ""
-        status = ""
-    }
+                }
+            )
 
-    fun saveTask(){
-        if(
-            title.isNotEmpty() &&
-            description.isNotEmpty()
-        ){
-            viewModelScope.launch {
-                save(title,description,status)
-            }
         }
 
+
     }
 
-    private suspend fun save(
-        title:String,
-        description:String,
-        status:String
-    ){
-        repository.save(
-            TaskModel(
-                id = UUID.randomUUID().toString(),
-                title = title,
-                description = description,
-                status = status
+
+    suspend fun save(){
+        with(_uiState.value){
+            repository.save(
+                TaskModel(
+                    title = title,
+                    description = description,
+                    status = status
+                )
             )
-        )
+        }
     }
+
 }
 
