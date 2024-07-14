@@ -17,16 +17,16 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE) // Atualiza e Insere
     suspend fun save(task: TaskEntity)
 
-    @Delete
-    suspend fun deleteTask(task: TaskEntity)
+//    @Delete
+//    suspend fun deleteTask(task: TaskEntity)
 
-    @Query ("DELETE FROM TaskEntity WHERE id = :id")
-    suspend fun deleteTaskId(id:Int)
+//    @Query ("DELETE FROM TaskEntity WHERE id = :id")
+//    suspend fun deleteTaskId(id:Int)
 
     @Query("SELECT * FROM TaskEntity")
     fun getAll():Flow<List<TaskEntity>>
 
-    @Update()
-    suspend fun updateTask(task: TaskEntity)
+//    @Update()
+//    suspend fun updateTask(task: TaskEntity)
 
 }

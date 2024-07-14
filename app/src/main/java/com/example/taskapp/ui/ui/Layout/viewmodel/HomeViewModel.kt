@@ -1,20 +1,11 @@
-package com.example.taskapp.viewmodel
+package com.example.taskapp.ui.ui.Layout.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.taskapp.models.TaskModel
 import com.example.taskapp.repository.TaskRepository
-import com.example.taskapp.repository.toTask
-import com.example.taskapp.state.TasksListUiState
+import com.example.taskapp.repository.toTaskModel
+import com.example.taskapp.ui.ui.Layout.state.TasksListUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import java.util.UUID
 
 class HomeViewModel (private val repository:TaskRepository):ViewModel(){
 
@@ -22,8 +13,9 @@ class HomeViewModel (private val repository:TaskRepository):ViewModel(){
 
     val uiState
         get() = _uiState
-            .combine(repository.tasks){ uiState, tasks ->
-                uiState.copy(tasks = tasks.map{it.toTask()})
+            .combine(repository.getAllTasks){uiState, tasks ->
+                uiState.copy(tasks = tasks.map { it.toTaskModel() })
+
             }
 //    init {
 //        viewModelScope.launch {

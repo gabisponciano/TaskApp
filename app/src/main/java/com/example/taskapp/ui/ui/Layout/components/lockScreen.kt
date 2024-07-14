@@ -1,4 +1,4 @@
-package com.example.taskapp.components
+package com.example.taskapp.ui.ui.Layout.components
 
 import android.app.Activity
 import android.content.Context

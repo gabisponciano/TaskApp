@@ -1,4 +1,4 @@
-package com.example.taskapp.screens
+package com.example.taskapp.ui.ui.Layout.screens
 
 import android.content.pm.ActivityInfo
 import androidx.compose.foundation.background
@@ -6,66 +6,41 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.taskapp.components.LockScreenOrientation
-import com.example.taskapp.components.taskButton
-import com.example.taskapp.state.TaskFormUiState
-import com.example.taskapp.ui.theme.backButton
-import com.example.taskapp.ui.theme.buttonBlue
-import com.example.taskapp.ui.theme.dividerColor
-import com.example.taskapp.ui.theme.textfield
-import com.example.taskapp.ui.theme.texthin
-import com.example.taskapp.viewmodel.TaskViewModel
-import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
+import com.example.taskapp.ui.ui.Layout.components.LockScreenOrientation
+import com.example.taskapp.ui.ui.Layout.components.taskButton
+import com.example.taskapp.ui.ui.Layout.state.TaskFormUiState
+import com.example.taskapp.ui.ui.Layout.buttonBlue
+import com.example.taskapp.ui.ui.Layout.dividerColor
+import com.example.taskapp.ui.ui.Layout.textfield
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSaveCLick: () -> Unit){
 
-    //val taskViewModel = koinViewModel<TaskViewModel>()
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-    val title = uiState.title
-    val description = uiState.description
-    val status = uiState.status
-    //val scope = rememberCoroutineScope()
+
 
 
     Scaffold(
@@ -93,7 +68,7 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSave
                         fontSize = 12.sp,
                         color = buttonBlue,
                         modifier = Modifier.clickable {
-//                            taskViewModel.clearFilds()
+
 
                         }
                     )
@@ -124,7 +99,7 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSave
                 .fillMaxWidth(),
                 contentAlignment = Alignment.Center){
                 Column (horizontalAlignment = Alignment.CenterHorizontally){
-                    OutlinedTextField(value = title,
+                    OutlinedTextField(value = uiState.title,
                         onValueChange = { uiState.onTitleChange },
                         singleLine = true,
                         label = { Text(text = ("Título"), color = textfield, fontSize = 14.sp) },
@@ -139,7 +114,7 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSave
 
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
-                    OutlinedTextField(value = description,
+                    OutlinedTextField(value = uiState.description,
                         onValueChange = { uiState.onDescriptionChange },
                         label = { Text(text = ("Descrição"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
@@ -153,7 +128,7 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSave
 
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
-                    OutlinedTextField(value = status,
+                    OutlinedTextField(value = uiState.status,
                         onValueChange = { uiState.onDescriptionStatus },
                         label = { Text(text = ("Status"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
@@ -164,45 +139,6 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSave
                             unfocusedBorderColor= Color.Transparent
                         )
                     )
-
-//                            Text(text = "Status",fontSize = 14.sp, color = textfield)
-//                            Row (horizontalArrangement = Arrangement.spacedBy(8.dp)){
-//                                Box(modifier = Modifier
-//                                    .height(24.dp)
-//                                    .width(81.dp)
-//                                    .clip(RoundedCornerShape(10.dp))
-//                                    .background(backButton)
-//                                    .clickable {},
-//                                    contentAlignment = Alignment.Center
-//                                )
-//                                {
-//                                    Text(text = "PENDENTE", fontSize = 10.sp, color = buttonBlue)
-//                                }
-//                                Box(modifier = Modifier
-//                                    .height(24.dp)
-//                                    .width(109.dp)
-//                                    .clip(RoundedCornerShape(10.dp))
-//                                    .background(backButton)
-//                                    .clickable {},
-//                                    contentAlignment = Alignment.Center
-//                                )
-//                                {
-//                                    Text(text = "EM PROGRESSO", fontSize = 10.sp, color = buttonBlue)
-//                                }
-//
-//                                Box(modifier = Modifier
-//                                    .height(24.dp)
-//                                    .width(89.dp)
-//                                    .clip(RoundedCornerShape(10.dp))
-//                                    .background(backButton)
-//                                    .clickable {},
-//                                    contentAlignment = Alignment.Center
-//                                )
-//                                {
-//                                    Text(text = "TERMINADO", fontSize = 10.sp, color = buttonBlue)
-//                                }
-//
-//                            }
 
                         }
 

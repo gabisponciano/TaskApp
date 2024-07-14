@@ -1,23 +1,14 @@
-package com.example.taskapp.viewmodel
+package com.example.taskapp.ui.ui.Layout.viewmodel
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.taskapp.db.TaskEntity
 import com.example.taskapp.models.TaskModel
 import com.example.taskapp.repository.TaskRepository
-import com.example.taskapp.state.TaskFormUiState
+import com.example.taskapp.ui.ui.Layout.state.TaskFormUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.UUID
 
 class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
 
@@ -51,16 +42,24 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
 
     }
 
+    fun clearFields(){
+        _uiState.update { it.copy(
+            title = "",
+            description = "",
+            status = ""
+        ) }
+    }
+
+
 
     suspend fun save(){
-        with(_uiState.value){
-            repository.save(
-                TaskModel(
-                    title = title,
-                    description = description,
-                    status = status
-                )
-            )
+        val task = TaskModel(
+            title = _uiState.value.title,
+            description = _uiState.value.description,
+            status =  _uiState.value.description
+        )
+        viewModelScope.launch {
+            repository.save(task)
         }
     }
 

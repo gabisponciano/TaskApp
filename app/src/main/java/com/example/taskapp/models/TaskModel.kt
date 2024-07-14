@@ -6,5 +6,6 @@ class TaskModel (
     val id: String = UUID.randomUUID().toString(),
     val title: String,
     val description: String,
-    val status: String
+    val status: String,
+
 )

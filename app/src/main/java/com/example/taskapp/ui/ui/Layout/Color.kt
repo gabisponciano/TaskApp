@@ -1,4 +1,4 @@
-package com.example.taskapp.ui.theme
+package com.example.taskapp.ui.ui.Layout
 
 import androidx.compose.ui.graphics.Color
 

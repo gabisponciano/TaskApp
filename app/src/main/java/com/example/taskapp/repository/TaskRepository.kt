@@ -11,41 +11,44 @@ import kotlinx.coroutines.withContext
 class TaskRepository(
     private val dao: TaskDao
 ){
-    val tasks get() = dao.getAll()
+    val getAllTasks get() = dao.getAll()
 
     suspend fun save(task: TaskModel) = withContext(IO) {
         dao.save(task.toEntity())
     }
 
-    suspend fun deleteTask(task: TaskModel) = withContext(IO){
-        dao.deleteTask(task.toEntity())
-    }
 
-    suspend fun deleteTaskId(id: Int) = withContext(IO){
-        dao.deleteTaskId(id)
-    }
+//    suspend fun deleteTask(task: TaskModel) = withContext(IO){
+//        dao.deleteTask(task.toEntity())
+//    }
+//
+//    suspend fun deleteTaskId(id: Int) = withContext(IO){
+//        dao.deleteTaskId(id)
+//    }
 
 //    suspend fun getAll(): List<TaskModel>  = withContext(IO){
 //        return@withContext dao.getAll().map { it.toTask() }
 //    }
 
-   suspend fun updateTask(task: TaskModel) {
-        dao.updateTask(task.toEntity())
-    }
+//   suspend fun updateTask(task: TaskModel) {
+//        dao.updateTask(task.toEntity())
+//    }
 }
 
 fun TaskModel.toEntity() = TaskEntity(
     id = this.id,
     title = this.title,
     description = this.description,
-    status = this.status
+    status = this.status,
+
 )
 
-fun TaskEntity.toTask() = TaskModel(
+fun TaskEntity.toTaskModel() = TaskModel(
     id = this.id,
     title = this.title,
     description = this.description,
-    status = this.status
+    status = this.status,
+
 
 )
 

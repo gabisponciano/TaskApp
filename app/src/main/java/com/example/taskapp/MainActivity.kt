@@ -12,12 +12,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.taskapp.screens.homeScreen
-import com.example.taskapp.screens.newTaskScreen
-import com.example.taskapp.state.TasksListUiState
-import com.example.taskapp.ui.theme.TaskAppTheme
-import com.example.taskapp.viewmodel.HomeViewModel
-import com.example.taskapp.viewmodel.TaskViewModel
+import com.example.taskapp.ui.ui.Layout.screens.HomeScreen
+import com.example.taskapp.ui.ui.Layout.screens.newTaskScreen
+import com.example.taskapp.ui.ui.Layout.state.TasksListUiState
+import com.example.taskapp.ui.ui.Layout.TaskAppTheme
+import com.example.taskapp.ui.ui.Layout.viewmodel.HomeViewModel
+import com.example.taskapp.ui.ui.Layout.viewmodel.TaskViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -45,7 +45,7 @@ fun Navigation(navController:NavHostController){
             val viewModel = koinViewModel<HomeViewModel>()
             val uiState by viewModel.uiState
                 .collectAsState(TasksListUiState())
-            homeScreen(navController,
+            HomeScreen(navController,
                 uiState = uiState,
                 onSaveClick = {
                     navController.navigate("task")
