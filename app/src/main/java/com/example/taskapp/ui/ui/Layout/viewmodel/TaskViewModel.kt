@@ -50,6 +50,12 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
         ) }
     }
 
+    suspend fun delete(task: TaskModel){
+        viewModelScope.launch {
+            repository.deleteTask(task)
+        }
+
+    }
 
 
     suspend fun save(){

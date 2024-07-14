@@ -1,6 +1,7 @@
 package com.example.taskapp.ui.ui.Layout.screens
 
 import android.content.pm.ActivityInfo
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,12 +29,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.taskapp.R
 import com.example.taskapp.ui.ui.Layout.components.CardItem
 import com.example.taskapp.ui.ui.Layout.components.LockScreenOrientation
 import com.example.taskapp.ui.ui.Layout.components.taskButton
@@ -78,7 +81,8 @@ fun HomeScreen(navController: NavHostController, uiState: TasksListUiState, onSa
                 Column ( modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .background(Color.White)){
+                    .background(Color.White),
+                    verticalArrangement = Arrangement.Center){
                     emptyTasks()
                 }
                 emptyTasks()
@@ -131,13 +135,12 @@ fun emptyTasks(){
         .height(118.dp)
         .width(375.dp),
     contentAlignment = Alignment.Center){
-    Column (horizontalAlignment = Alignment.CenterHorizontally){
+    Column (horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
         Text(text = "Nada aqui. Por agora.",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
-
         Text(text = "É aqui que você encontrará seus projetos finalizados.",
             fontSize = 14.sp,
             color = texthin,

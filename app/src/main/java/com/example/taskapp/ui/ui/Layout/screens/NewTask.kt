@@ -34,12 +34,14 @@ import com.example.taskapp.ui.ui.Layout.state.TaskFormUiState
 import com.example.taskapp.ui.ui.Layout.buttonBlue
 import com.example.taskapp.ui.ui.Layout.dividerColor
 import com.example.taskapp.ui.ui.Layout.textfield
+import com.example.taskapp.ui.ui.Layout.viewmodel.TaskViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSaveCLick: () -> Unit){
-
+fun newTaskScreen(navController: NavController, uiState: TaskFormUiState,onSaveCLick: () -> Unit){
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+    val taskViewModel = koinViewModel<TaskViewModel>()
 
 
 
@@ -68,8 +70,7 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSave
                         fontSize = 12.sp,
                         color = buttonBlue,
                         modifier = Modifier.clickable {
-
-
+                            taskViewModel.clearFields()
                         }
                     )
                 }
@@ -100,7 +101,7 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSave
                 contentAlignment = Alignment.Center){
                 Column (horizontalAlignment = Alignment.CenterHorizontally){
                     OutlinedTextField(value = uiState.title,
-                        onValueChange = { uiState.onTitleChange },
+                        onValueChange =  uiState.onTitleChange ,
                         singleLine = true,
                         label = { Text(text = ("Título"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
@@ -115,7 +116,7 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSave
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
                     OutlinedTextField(value = uiState.description,
-                        onValueChange = { uiState.onDescriptionChange },
+                        onValueChange =  uiState.onDescriptionChange ,
                         label = { Text(text = ("Descrição"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
                             .width(343.dp)
@@ -129,7 +130,7 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState, onSave
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
                     OutlinedTextField(value = uiState.status,
-                        onValueChange = { uiState.onDescriptionStatus },
+                        onValueChange =  uiState.onDescriptionStatus ,
                         label = { Text(text = ("Status"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
                             .width(343.dp)

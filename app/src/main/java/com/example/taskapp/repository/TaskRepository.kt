@@ -18,9 +18,9 @@ class TaskRepository(
     }
 
 
-//    suspend fun deleteTask(task: TaskModel) = withContext(IO){
-//        dao.deleteTask(task.toEntity())
-//    }
+    suspend fun deleteTask(task: TaskModel) = withContext(IO){
+        dao.deleteTask(task.toEntity())
+    }
 //
 //    suspend fun deleteTaskId(id: Int) = withContext(IO){
 //        dao.deleteTaskId(id)
