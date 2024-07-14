@@ -58,14 +58,7 @@ fun Navigation(navController:NavHostController){
             val viewModel = koinViewModel<TaskViewModel>()
             val uiState by viewModel.uiState.collectAsState()
             newTaskScreen(navController,
-                uiState = uiState,
-                onSaveCLick = {
-                    scope.launch {
-                        viewModel.save()
-                        navController.popBackStack()
-                    }
-                }
-
+                uiState = uiState
             )
         }
         composable("change"){

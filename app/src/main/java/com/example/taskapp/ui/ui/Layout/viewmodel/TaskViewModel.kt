@@ -29,7 +29,7 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
                         it.copy(description = description)
                     }
                 },
-                onDescriptionStatus = {status ->
+                onStatusChange = {status ->
                     _uiState.update {
                         it.copy(status = status)
                     }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -82,10 +83,10 @@ fun HomeScreen(navController: NavHostController, uiState: TasksListUiState, onSa
                     .fillMaxSize()
                     .padding(innerPadding)
                     .background(Color.White),
-                    verticalArrangement = Arrangement.Center){
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally){
                     emptyTasks()
                 }
-                emptyTasks()
             }else{
                 LazyColumn ( modifier = Modifier
                     .fillMaxSize()
@@ -97,45 +98,22 @@ fun HomeScreen(navController: NavHostController, uiState: TasksListUiState, onSa
                     }
                 }
             }
-//            LazyColumn ( modifier = Modifier
-//                .fillMaxSize()
-//                .padding(innerPadding)
-//                .background(Color.White)){
-//                itemsIndexed(uiState.tasks){_, task->
-//                    CardItem(task, navController)
-//
-//                }
-//            }
-//            Box (modifier = Modifier
-//                .height(118.dp)
-//                .width(375.dp),
-//                contentAlignment = Alignment.Center){
-//                Column (horizontalAlignment = Alignment.CenterHorizontally){
-//                    Text(text = "Nada aqui. Por agora.",
-//                        fontSize = 18.sp,
-//                        fontWeight = FontWeight.Bold,
-//                        textAlign = TextAlign.Center
-//                    )
-//
-//                    Text(text = "É aqui que você encontrará seus projetos finalizados.",
-//                        fontSize = 14.sp,
-//                        color = texthin,
-//                        textAlign = TextAlign.Center
-//                        )
-//                }
-//            }
-
-
     }
 }
+
+
 
 @Composable
 fun emptyTasks(){
     Box (modifier = Modifier
-        .height(118.dp)
-        .width(375.dp),
+        .fillMaxSize(),
     contentAlignment = Alignment.Center){
-    Column (horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center){
+    Column (horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize()
+
+        ){
+        Image(painterResource(R.drawable.imagemnotas), contentDescription = null,
+            modifier = Modifier.size(100.dp))
         Text(text = "Nada aqui. Por agora.",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,

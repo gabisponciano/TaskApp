@@ -105,7 +105,9 @@ fun CardItem(task: TaskModel, navController: NavController){
                                 taskViewModel.delete(task)
                             }
                         })
+                        UpdateButton {
 
+                        }
 
                     }
                 }
@@ -136,6 +138,23 @@ fun DeleteButton(onDeleteClick: () -> Unit){
     )
     {
         Text(text = "Deletar", fontSize = 10.sp, color = Color.White)
+    }
+}
+
+@Composable
+fun UpdateButton(onChangeButton:() -> Unit){
+    Box(modifier = Modifier
+        .height(24.dp)
+        .width(89.dp)
+        .clip(RoundedCornerShape(10.dp))
+        .background(backButton)
+        .clickable {
+            onChangeButton()
+        },
+        contentAlignment = Alignment.Center
+    )
+    {
+        Text(text = "Alterar", fontSize = 10.sp, color = buttonBlue)
     }
 }
 

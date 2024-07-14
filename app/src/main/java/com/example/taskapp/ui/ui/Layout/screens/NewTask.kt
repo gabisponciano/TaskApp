@@ -1,11 +1,13 @@
 package com.example.taskapp.ui.ui.Layout.screens
 
 import android.content.pm.ActivityInfo
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,9 +23,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,14 +39,16 @@ import com.example.taskapp.ui.ui.Layout.buttonBlue
 import com.example.taskapp.ui.ui.Layout.dividerColor
 import com.example.taskapp.ui.ui.Layout.textfield
 import com.example.taskapp.ui.ui.Layout.viewmodel.TaskViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun newTaskScreen(navController: NavController, uiState: TaskFormUiState,onSaveCLick: () -> Unit){
+fun newTaskScreen(navController: NavController, uiState: TaskFormUiState){
     LockScreenOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     val taskViewModel = koinViewModel<TaskViewModel>()
-
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
 
     Scaffold(
@@ -81,7 +87,15 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState,onSaveC
                 containerColor = Color.White
             ){
                 taskButton(title = "Criar") {
-                    onSaveCLick()
+                    scope.launch {
+                        if(uiState.title.isEmpty() || uiState.description.isEmpty() || uiState.status.isEmpty()){
+                            Toast.makeText(context, "Existe Campo em Branco", Toast.LENGTH_LONG).show()
+                        }else{
+                            taskViewModel.save()
+                            taskViewModel.clearFields()
+                            Toast.makeText(context, "Task Criada", Toast.LENGTH_LONG).show()
+                        }
+                    }
 
                 }
             }
@@ -112,8 +126,11 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState,onSaveC
                             unfocusedBorderColor= Color.Transparent
                         )
                     )
+                    Spacer(modifier = Modifier.height(2.dp))
 
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
+
+                    Spacer(modifier = Modifier.height(2.dp))
 
                     OutlinedTextField(value = uiState.description,
                         onValueChange =  uiState.onDescriptionChange ,
@@ -126,11 +143,14 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState,onSaveC
                             unfocusedBorderColor= Color.Transparent
                         )
                     )
+                    Spacer(modifier = Modifier.height(2.dp))
 
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
+                    Spacer(modifier = Modifier.height(2.dp))
+
                     OutlinedTextField(value = uiState.status,
-                        onValueChange =  uiState.onDescriptionStatus ,
+                        onValueChange =  uiState.onStatusChange ,
                         label = { Text(text = ("Status"), color = textfield, fontSize = 14.sp) },
                         modifier = Modifier
                             .width(343.dp)
@@ -144,7 +164,6 @@ fun newTaskScreen(navController: NavController, uiState: TaskFormUiState,onSaveC
                         }
 
                     }
-                    Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
 
 
                     Divider(color = dividerColor, thickness = 1.dp, modifier = Modifier.width(343.dp))
