@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -73,24 +74,34 @@ fun HomeScreen(navController: NavHostController, uiState: TasksListUiState, onSa
             }
         },
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .background(Color.White)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-        ) {
-            Box(modifier = Modifier.height(39.dp)){
+            if(uiState.tasks.isEmpty()){
+                Column ( modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .background(Color.White)){
+                    emptyTasks()
+                }
+                emptyTasks()
+            }else{
+                LazyColumn ( modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .background(Color.White)){
+                    itemsIndexed(uiState.tasks){_, task->
+                        CardItem(task, navController)
 
-            }
-            LazyColumn {
-                itemsIndexed(uiState.tasks){_, task->
-                    CardItem(task, navController)
-
+                    }
                 }
             }
+//            LazyColumn ( modifier = Modifier
+//                .fillMaxSize()
+//                .padding(innerPadding)
+//                .background(Color.White)){
+//                itemsIndexed(uiState.tasks){_, task->
+//                    CardItem(task, navController)
+//
+//                }
+//            }
 //            Box (modifier = Modifier
 //                .height(118.dp)
 //                .width(375.dp),
@@ -110,7 +121,7 @@ fun HomeScreen(navController: NavHostController, uiState: TasksListUiState, onSa
 //                }
 //            }
 
-        }
+
     }
 }
 
@@ -138,9 +149,9 @@ fun emptyTasks(){
 
 
 
-//
-//@Preview
-//@Composable
-//fun HomePreview(){
-//    homeScreen(navController = rememberNavController())
-//}
+
+@Preview
+@Composable
+fun HomePreview(){
+    emptyTasks()
+}
