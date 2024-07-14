@@ -24,7 +24,7 @@ val storageModule = module {
         Room.databaseBuilder(
             androidContext(),
             TaskDatabase::class.java, "task-database.db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
     single {
         get<TaskDatabase>().TaskDao()

@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -85,7 +86,7 @@ fun HomeScreen(navController: NavHostController, uiState: TasksListUiState, onSa
 
             }
             LazyColumn {
-                items(uiState.tasks){task->
+                itemsIndexed(uiState.tasks){_, task->
                     CardItem(task, navController)
 
                 }
