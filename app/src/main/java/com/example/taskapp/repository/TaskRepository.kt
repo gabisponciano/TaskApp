@@ -30,9 +30,9 @@ class TaskRepository(
 //        return@withContext dao.getAll().map { it.toTask() }
 //    }
 
-//   suspend fun updateTask(task: TaskModel) {
-//        dao.updateTask(task.toEntity())
-//    }
+   suspend fun updateTask(task: TaskModel) {
+        dao.updateTask(task.toEntity())
+    }
 }
 
 fun TaskModel.toEntity() = TaskEntity(

@@ -106,6 +106,7 @@ fun CardItem(task: TaskModel, navController: NavController){
                             }
                         })
                         UpdateButton {
+                            navController.navigate("editTask/{taskId}")
 
                         }
 

@@ -8,14 +8,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.taskapp.models.TaskModel
 import com.example.taskapp.ui.ui.Layout.screens.HomeScreen
 import com.example.taskapp.ui.ui.Layout.screens.newTaskScreen
 import com.example.taskapp.ui.ui.Layout.state.TasksListUiState
 import com.example.taskapp.ui.ui.Layout.TaskAppTheme
+import com.example.taskapp.ui.ui.Layout.screens.UpdateTaskScreen
 import com.example.taskapp.ui.ui.Layout.viewmodel.HomeViewModel
 import com.example.taskapp.ui.ui.Layout.viewmodel.TaskViewModel
 import kotlinx.coroutines.launch
@@ -54,14 +57,19 @@ fun Navigation(navController:NavHostController){
             )
         }
         composable("task"){
-            val scope = rememberCoroutineScope()
             val viewModel = koinViewModel<TaskViewModel>()
             val uiState by viewModel.uiState.collectAsState()
             newTaskScreen(navController,
                 uiState = uiState
             )
         }
-        composable("change"){
+        composable("editTask/{taskId}") { backStackEntry ->
+            val mostra = navController.previousBackStackEntry?.savedStateHandle?.get<TaskModel>("task")
+            val viewModel = koinViewModel<TaskViewModel>()
+            val uiState by viewModel.uiState.collectAsState()
+            if (mostra != null) {
+                UpdateTaskScreen(mostra, navController = navController,uiState)
+            }
 
         }
     }

@@ -26,7 +26,7 @@ interface TaskDao {
     @Query("SELECT * FROM TaskEntity")
     fun getAll():Flow<List<TaskEntity>>
 
-//    @Update()
-//    suspend fun updateTask(task: TaskEntity)
+    @Update()
+    suspend fun updateTask(task: TaskEntity)
 
 }

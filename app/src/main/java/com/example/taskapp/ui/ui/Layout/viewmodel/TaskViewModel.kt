@@ -42,6 +42,18 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
 
     }
 
+
+    fun loadTask(task: TaskModel) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(
+                title = task.title,
+                description = task.description,
+                status = task.status
+            )
+        }
+    }
+
+
     fun clearFields(){
         _uiState.update { it.copy(
             title = "",
@@ -50,11 +62,23 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
         ) }
     }
 
-    suspend fun delete(task: TaskModel){
+     fun delete(task: TaskModel){
         viewModelScope.launch {
             repository.deleteTask(task)
         }
 
+    }
+
+     fun update(task: TaskModel){
+        val _task = TaskModel(
+            id = task.id,
+            title = _uiState.value.title,
+            description = _uiState.value.description,
+            status = _uiState.value.status
+        )
+         viewModelScope.launch {
+             repository.updateTask(_task)
+         }
     }
 
 
@@ -62,7 +86,7 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
         val task = TaskModel(
             title = _uiState.value.title,
             description = _uiState.value.description,
-            status =  _uiState.value.description
+            status =  _uiState.value.status
         )
         viewModelScope.launch {
             repository.save(task)

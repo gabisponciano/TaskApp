@@ -119,7 +119,7 @@ fun emptyTasks(){
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
-        Text(text = "É aqui que você encontrará seus projetos finalizados.",
+        Text(text = "É aqui que você encontrará seus projetos.",
             fontSize = 14.sp,
             color = texthin,
             textAlign = TextAlign.Center
